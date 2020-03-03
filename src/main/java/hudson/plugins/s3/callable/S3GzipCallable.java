@@ -72,7 +72,7 @@ public final class S3GzipCallable extends S3BaseUploadCallable implements Master
         Upload upload = null;
 
         try {
-            final InputStream gzippedStream = new FileInputStream(localFile)
+            final InputStream gzippedStream = new FileInputStream(localFile);
             final ObjectMetadata metadata = buildMetadata(file);
             metadata.setContentEncoding("gzip");
             metadata.setContentLength(localFile.length());
