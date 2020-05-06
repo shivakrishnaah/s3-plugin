@@ -70,6 +70,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -267,7 +268,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
         }
 
         targetDir.mkdirs();
-        final List<FingerprintRecord> records = profile.downloadAll(src, action.getArtifacts(), includeFilter, excludeFilter, targetDir, isFlatten());
+        final List<FingerprintRecord> records = profile.downloadAll(src, new CopyOnWriteArrayList<>(action.getArtifacts()), includeFilter, excludeFilter, targetDir, isFlatten());
 
         final Map<String, String> fingerprints = Maps.newHashMap();
         for(FingerprintRecord record : records) {

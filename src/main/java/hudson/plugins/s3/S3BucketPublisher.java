@@ -48,6 +48,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -244,7 +245,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         try {
             final Map<String, String> envVars = run.getEnvironment(listener);
             final Map<String, String> record = Maps.newHashMap();
-            final List<FingerprintRecord> artifacts = Lists.newArrayList();
+            final CopyOnWriteArrayList<FingerprintRecord> artifacts = new CopyOnWriteArrayList();
 
             for (Entry entry : entries) {
                 if (entry.noUploadOnFailure && Result.FAILURE.equals(run.getResult())) {
@@ -320,7 +321,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         }
     }
 
-    private void addS3ArtifactsAction(Run<?, ?> run, S3Profile profile, List<FingerprintRecord> artifacts) {
+    private void addS3ArtifactsAction(Run<?, ?> run, S3Profile profile, CopyOnWriteArrayList<FingerprintRecord> artifacts) {
         S3ArtifactsAction existingAction = run.getAction(S3ArtifactsAction.class);
         if (existingAction != null) {
             existingAction.getArtifacts().addAll(artifacts);

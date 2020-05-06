@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletException;
 
@@ -25,9 +26,9 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 public class S3ArtifactsAction implements RunAction2 {
     private final Run build; // Compatibility for old versions
     private final String profile;
-    private final List<FingerprintRecord> artifacts;
+    private final CopyOnWriteArrayList<FingerprintRecord> artifacts;
 
-    public S3ArtifactsAction(Run<?, ?> run, S3Profile profile, List<FingerprintRecord> artifacts) {
+    public S3ArtifactsAction(Run<?, ?> run, S3Profile profile, CopyOnWriteArrayList<FingerprintRecord> artifacts) {
         this.build = run;
         this.profile = profile.getName();
         this.artifacts = artifacts;
@@ -62,7 +63,7 @@ public class S3ArtifactsAction implements RunAction2 {
     }
 
     @Exported
-    public List<FingerprintRecord> getArtifacts() {
+    public CopyOnWriteArrayList<FingerprintRecord> getArtifacts() {
         return artifacts;
     }
 
