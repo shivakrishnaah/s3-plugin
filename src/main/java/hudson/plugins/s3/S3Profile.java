@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import hudson.ProxyConfiguration;
@@ -232,7 +231,7 @@ public class S3Profile {
        * Download all artifacts from a given build
        */
       public List<FingerprintRecord> downloadAll(Run build,
-                                                 final CopyOnWriteArrayList<FingerprintRecord> artifacts,
+                                                 final List<FingerprintRecord> artifacts,
                                                  final String includeFilter,
                                                  final String excludeFilter,
                                                  final FilePath targetDir,

@@ -245,7 +245,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         try {
             final Map<String, String> envVars = run.getEnvironment(listener);
             final Map<String, String> record = Maps.newHashMap();
-            final CopyOnWriteArrayList<FingerprintRecord> artifacts = new CopyOnWriteArrayList();
+            final List<FingerprintRecord> artifacts = new CopyOnWriteArrayList();
 
             for (Entry entry : entries) {
                 if (entry.noUploadOnFailure && Result.FAILURE.equals(run.getResult())) {
@@ -321,7 +321,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         }
     }
 
-    private void addS3ArtifactsAction(Run<?, ?> run, S3Profile profile, CopyOnWriteArrayList<FingerprintRecord> artifacts) {
+    private void addS3ArtifactsAction(Run<?, ?> run, S3Profile profile, List<FingerprintRecord> artifacts) {
         S3ArtifactsAction existingAction = run.getAction(S3ArtifactsAction.class);
         if (existingAction != null) {
             existingAction.getArtifacts().addAll(artifacts);
