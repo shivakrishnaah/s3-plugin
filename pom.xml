@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.25</version>
+        <version>4.27</version>
     </parent>
 
     <artifactId>s3</artifactId>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>maven-plugin</artifactId>
-            <version>3.12</version>
+            <version>3.13</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-io</groupId>
