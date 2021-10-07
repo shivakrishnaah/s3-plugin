@@ -2,10 +2,12 @@ package hudson.plugins.s3;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.regions.Region;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.AbortException;
 import hudson.Extension;
@@ -201,7 +203,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         throw new IllegalArgumentException("Can't find profile: " + profileName);
     }
 
-    @Override
+    @Override @NonNull
     public Collection<? extends Action> getProjectActions(AbstractProject<?, ?> project) {
         return ImmutableList.of(new S3ArtifactsProjectAction(project));
     }
@@ -550,7 +552,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
             }
 
             final String defaultRegion = ClientHelper.DEFAULT_AMAZON_S3_REGION_NAME;
-            final AmazonS3Client client = ClientHelper.createClient(
+            final AmazonS3 client = ClientHelper.createClient(
                     checkedAccessKey, checkedSecretKey, useRole, defaultRegion, Jenkins.get().proxy);
 
             try {
