@@ -55,6 +55,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Collections;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class MinIOTest {
@@ -71,7 +72,7 @@ public class MinIOTest {
 
     @Rule
     public RealJenkinsRule rr = new RealJenkinsRule().javaOptions("-Xmx256m",
-            "-Dhudson.plugins.s3.DEFAULT_AMAZON_S3_REGION=local", "-Dhudson.plugins.s3.ENDPOINT=http://" + minioServiceEndpoint);
+            "-Dhudson.plugins.s3.ENDPOINT=http://" + minioServiceEndpoint);
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -121,14 +122,10 @@ public class MinIOTest {
     public void testS3BucketPublisher() throws Throwable {
         final String endpoint = minioServiceEndpoint;
         rr.then(r -> {
-
             /*r.jenkins.setLabelString("work"); //Able to debug when running on the controller but not an agent
             r.jenkins.setNumExecutors(1);*/
-            r.createOnlineSlave(Label.get("work"), new EnvVars("hudson.plugins.s3.ENDPOINT", "http://" + endpoint));
-
+            r.createOnlineSlave(Label.get("work"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
             createProfile();
-
-
             createAndRunPublisher(r);
         });
     }
@@ -173,8 +170,8 @@ public class MinIOTest {
     public void testS3CopyArtifact() throws Throwable {
         final String endpoint = minioServiceEndpoint;
         rr.then(r -> {
-            r.createOnlineSlave(Label.get("work"), new EnvVars("hudson.plugins.s3.ENDPOINT", "http://" + endpoint));
-            r.createOnlineSlave(Label.get("copy"), new EnvVars("hudson.plugins.s3.ENDPOINT", "http://" + endpoint));
+            r.createOnlineSlave(Label.get("work"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
+            r.createOnlineSlave(Label.get("copy"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
 
             createProfile();
             createAndRunPublisher(r);
@@ -199,15 +196,11 @@ public class MinIOTest {
         @Override
         public boolean perform(final AbstractBuild<?, ?> build, final Launcher launcher, final BuildListener listener) throws InterruptedException, IOException {
             final FilePath child = build.getWorkspace().child("test.txt");
-            if (!child.exists()) {
-                listener.error("No test.txt in workspace!");
-                return false;
-            }
+            assertTrue("No test.txt in workspace!", child.exists());
+
             final String s = child.readToString();
-            if (!FILE_CONTENT.equals(s)) {
-                listener.error("Wrong file content! Expected \"" + FILE_CONTENT + "\" but was \"" + s + "\"");
-                return false;
-            }
+            assertEquals(FILE_CONTENT, s);
+
             return true;
         }
     }

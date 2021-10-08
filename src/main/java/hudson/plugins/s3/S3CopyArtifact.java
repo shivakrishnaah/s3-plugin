@@ -279,7 +279,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
             fingerprints.put(record.getName(), record.getFingerprint());
         }
 
-        for (Run<?,?> r : new Run[]{src, dst}) {
+        for (Run<?,?> r : new Run<?,?>[]{src, dst}) {
             if (r == null) {
                 continue;
             }

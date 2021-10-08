@@ -22,7 +22,7 @@ public class ClientHelper {
     public final static String DEFAULT_AMAZON_S3_REGION_NAME = System.getProperty(
             "hudson.plugins.s3.DEFAULT_AMAZON_S3_REGION",
             com.amazonaws.services.s3.model.Region.US_Standard.toAWSRegion().getName());
-    public static final String ENDPOINT = System.getProperty("hudson.plugins.s3.ENDPOINT", System.getenv("hudson.plugins.s3.ENDPOINT"));
+    public static final String ENDPOINT = System.getProperty("hudson.plugins.s3.ENDPOINT", System.getenv("PLUGIN_S3_ENDPOINT"));
 
     public static AmazonS3 createClient(String accessKey, String secretKey, boolean useRole, String region, ProxyConfiguration proxy)
     {
@@ -88,7 +88,7 @@ public class ClientHelper {
         } else {
             s3Endpoint = region.getServiceEndpoint(AmazonS3.ENDPOINT_PREFIX);
         }
-        Logger.getLogger(ClientHelper.class.getName()).info("ENDPOINT: " + s3Endpoint);
+        Logger.getLogger(ClientHelper.class.getName()).fine(() -> String.format("ENDPOINT: %s", s3Endpoint));
         if (shouldUseProxy(proxy, s3Endpoint)) {
             clientConfiguration.setProxyHost(proxy.name);
             clientConfiguration.setProxyPort(proxy.port);
