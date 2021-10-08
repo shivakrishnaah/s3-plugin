@@ -57,7 +57,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertTrue;
 
-public class MiniIOTest {
+public class MinIOTest {
 
     private static final String ACCESS_KEY = "supersecure";
     private static final String SECRET_KEY = "donttell";
