@@ -10,7 +10,7 @@
     <packaging>hpi</packaging>
     <version>0.11.10-SNAPSHOT</version>
     <name>Jenkins S3 publisher plugin</name>
-    <url>https://wiki.jenkins.io/display/JENKINS/S3+Plugin</url>
+    <url>https://github.com/jenkinsci/s3-plugin</url>
 
     <properties>
         <java.level>8</java.level>
