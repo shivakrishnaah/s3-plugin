@@ -33,7 +33,7 @@ For Pipeline users, the same two actions are available via the
 `s3CopyArtifact` and `s3Upload` step. You can use the snippet generator to get started.
 
 When using an Amazon S3 compatible storage system (OpenStack Swift, EMC Atmos...),
-the list of AWS regions can be overridden specifying a file 
+the list of AWS regions can be overridden by specifying a file 
 `classpath://com/amazonaws/partitions/override/endpoints.json` matching the format 
 defined in AWS SDK's [endpoints.json](https://github.com/aws/aws-sdk-java/blob/master/aws-java-sdk-core/src/main/resources/com/amazonaws/partitions/endpoints.json).
 
@@ -44,7 +44,7 @@ to locate `com/amazonaws/partitions/override/endpoints.json` in `/path/to/boot/c
 
 Even if most of the features of the Jenkins S3 Plugin require the user to specify the target region,
 some feature rely on a default Amazon S3 region which is by default the "US Standard Amazon S3 Region" 
-and its endpoint `s3.amazonaws.com`. This default region can be overridden with the system property 
+and its endpoint is `s3.amazonaws.com`. This default region can be overridden with the system property 
 `hudson.plugins.s3.DEFAULT_AMAZON_S3_REGION`. 
 Note that this default region name MUST match with a region define in the AWS SDK configuration file `endpoints.json`
 (see above).
@@ -80,15 +80,15 @@ with your bucket name, which you'll have to create first:
 Notes
 =====
 
-* Only the basename of source files is use as the object key name,
+* Only the basename of source files is used as the object key name,
 an option to include the path name relative to the workspace
-should probably added.
+should probably be added.
 
 Acknowledgements
 ================
 
 * The Hudson scp plugin author for providing a great place to
-start copy/pasting from
+start copy/pasting from.
 * http://github.com/stephenh/hudson-git2 - for this README.markdown
-template and a great git plugin for hudson
+template and a great git plugin for hudson.
 * jets3t - http://jets3t.s3.amazonaws.com/index.html
