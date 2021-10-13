@@ -98,10 +98,8 @@ public class MinIOTest {
         minioServiceEndpoint = String.format("%s:%s", minioServer.getContainerIpAddress(), mappedPort);
 
         final AmazonS3 client = AmazonS3ClientBuilder.standard()
-                //.withRegion("local")
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY)))
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://" + minioServiceEndpoint, "us-east-1"))
-                //.withForceGlobalBucketAccessEnabled(true)
                 .withPathStyleAccessEnabled(true)
                 .build();
 
@@ -124,7 +122,7 @@ public class MinIOTest {
         rr.then(r -> {
             /*r.jenkins.setLabelString("work"); //Able to debug when running on the controller but not an agent
             r.jenkins.setNumExecutors(1);*/
-            r.createOnlineSlave(Label.get("work"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
+            r.createOnlineSlave(Label.get("work"));
             createProfile();
             createAndRunPublisher(r);
         });
@@ -170,8 +168,8 @@ public class MinIOTest {
     public void testS3CopyArtifact() throws Throwable {
         final String endpoint = minioServiceEndpoint;
         rr.then(r -> {
-            r.createOnlineSlave(Label.get("work"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
-            r.createOnlineSlave(Label.get("copy"), new EnvVars("PLUGIN_S3_ENDPOINT", "http://" + endpoint));
+            r.createOnlineSlave(Label.get("work"));
+            r.createOnlineSlave(Label.get("copy"));
 
             createProfile();
             createAndRunPublisher(r);

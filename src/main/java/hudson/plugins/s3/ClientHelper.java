@@ -24,7 +24,11 @@ public class ClientHelper {
             com.amazonaws.services.s3.model.Region.US_Standard.toAWSRegion().getName());
     public static final String ENDPOINT = System.getProperty("hudson.plugins.s3.ENDPOINT", System.getenv("PLUGIN_S3_ENDPOINT"));
 
-    public static AmazonS3 createClient(String accessKey, String secretKey, boolean useRole, String region, ProxyConfiguration proxy)
+    public static AmazonS3 createClient(String accessKey, String secretKey, boolean useRole, String region, ProxyConfiguration proxy) {
+        return createClient(accessKey, secretKey, useRole, region, proxy, ENDPOINT);
+    }
+
+    public static AmazonS3 createClient(String accessKey, String secretKey, boolean useRole, String region, ProxyConfiguration proxy, String customEndpoint)
     {
         Region awsRegion = getRegionFromString(region);
 
@@ -36,8 +40,8 @@ public class ClientHelper {
             builder = builder.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)));
         }
 
-        if (StringUtils.isNotEmpty(ENDPOINT)) {
-            builder = builder.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(ENDPOINT, awsRegion.getName()))
+        if (StringUtils.isNotEmpty(customEndpoint)) {
+            builder = builder.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(customEndpoint, awsRegion.getName()))
                     .withPathStyleAccessEnabled(true);
         } else {
             builder = builder.withRegion(awsRegion.getName());

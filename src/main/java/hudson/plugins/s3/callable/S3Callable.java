@@ -7,8 +7,10 @@ import hudson.FilePath.FileCallable;
 import hudson.ProxyConfiguration;
 import hudson.plugins.s3.ClientHelper;
 import hudson.util.Secret;
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.remoting.RoleChecker;
 
+import java.io.ObjectStreamException;
 import java.util.HashMap;
 
 abstract class S3Callable<T> implements FileCallable<T> {
@@ -19,6 +21,7 @@ abstract class S3Callable<T> implements FileCallable<T> {
     private final boolean useRole;
     private final String region;
     private final ProxyConfiguration proxy;
+    private final String customEndpoint;
 
     private static transient HashMap<String, TransferManager> transferManagers = new HashMap<>();
 
@@ -28,12 +31,13 @@ abstract class S3Callable<T> implements FileCallable<T> {
         this.useRole = useRole;
         this.region = region;
         this.proxy = proxy;
+        this.customEndpoint = ClientHelper.ENDPOINT;
     }
 
     protected synchronized TransferManager getTransferManager() {
         final String uniqueKey = getUniqueKey();
         if (transferManagers.get(uniqueKey) == null) {
-            final AmazonS3 client = ClientHelper.createClient(accessKey, Secret.toString(secretKey), useRole, region, proxy);
+            final AmazonS3 client = ClientHelper.createClient(accessKey, Secret.toString(secretKey), useRole, region, proxy, customEndpoint);
             transferManagers.put(uniqueKey, TransferManagerBuilder.standard().withS3Client(client).build());
         }
 
