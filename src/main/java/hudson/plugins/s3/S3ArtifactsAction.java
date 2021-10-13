@@ -14,8 +14,6 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
 import hudson.Functions;
 import jenkins.model.RunAction2;
-import jenkins.security.stapler.StaplerAccessibleType;
-import jenkins.security.stapler.StaplerDispatchable;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -25,7 +23,7 @@ import org.kohsuke.stapler.export.ExportedBean;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 
-@ExportedBean @StaplerAccessibleType
+@ExportedBean
 public class S3ArtifactsAction implements RunAction2 {
     private final Run<?,?> build; // Compatibility for old versions
     private final String profile;
@@ -77,7 +75,6 @@ public class S3ArtifactsAction implements RunAction2 {
         return artifacts;
     }
 
-    @StaplerDispatchable
     public void doDownload(final StaplerRequest request, final StaplerResponse response) throws IOException, ServletException {
         if (Functions.isArtifactsPermissionEnabled()) {
             build.getParent().checkPermission(Run.ARTIFACTS);
