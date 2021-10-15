@@ -6,22 +6,6 @@ This plugin helps one to upload build artifacts to Amazon S3.
 If you'd like to have some of your artifacts be publicly downloadable,
 see [Granting public access to some S3 objects](https://aws.amazon.com/premiumsupport/knowledge-center/read-access-objects-s3-bucket/)
 
-Install
-=======
-
-Tested with Jenkins 1.563
-
-* Upload `target/s3.hpi` to your instance of Jenkins via
-./pluginManager/advanced
-* Configure S3 profile: Manage Jenkins -> Configure System ->
-Amazon S3 profiles
-* Project -> Configure -> [x] Publish artifacts to S3 Bucket
-
-Building
-========
-
-Just run `mvn`.
-
 Usage
 =====
 
