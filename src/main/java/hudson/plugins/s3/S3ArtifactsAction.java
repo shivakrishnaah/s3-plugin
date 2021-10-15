@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
 import hudson.Functions;
@@ -25,7 +25,7 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 
 @ExportedBean
 public class S3ArtifactsAction implements RunAction2 {
-    private final Run build; // Compatibility for old versions
+    private final Run<?,?> build; // Compatibility for old versions
     private final String profile;
     private final List<FingerprintRecord> artifacts;
 
@@ -89,7 +89,7 @@ public class S3ArtifactsAction implements RunAction2 {
         for (FingerprintRecord record : artifacts) {
             if (record.getArtifact().getName().equals(artifact)) {
                 final S3Profile s3 = S3BucketPublisher.getProfile(profile);
-                final AmazonS3Client client = s3.getClient(record.getArtifact().getRegion());
+                final AmazonS3 client = s3.getClient(record.getArtifact().getRegion());
                 final String url = getDownloadURL(client, s3.getSignedUrlExpirySeconds(), build, record);
                 response.sendRedirect2(url);
                 return;
@@ -106,7 +106,7 @@ public class S3ArtifactsAction implements RunAction2 {
      * download and there's no need for the user to have credentials to
      * access S3.
      */
-    private String getDownloadURL(AmazonS3Client client, int signedUrlExpirySeconds, Run run, FingerprintRecord record) {
+    private String getDownloadURL(AmazonS3 client, int signedUrlExpirySeconds, Run run, FingerprintRecord record) {
         final Destination dest = Destination.newFromRun(run, record.getArtifact());
         final GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(dest.bucketName, dest.objectName);
         request.setExpiration(new Date(System.currentTimeMillis() + signedUrlExpirySeconds*1000));

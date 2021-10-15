@@ -250,7 +250,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
         }
     }
 
-    private boolean perform(Run src, Run<?,?> dst, String includeFilter, String excludeFilter, FilePath targetDir, PrintStream console)
+    private boolean perform(Run<?,?> src, Run<?,?> dst, String includeFilter, String excludeFilter, FilePath targetDir, PrintStream console)
             throws IOException, InterruptedException {
 
         final S3ArtifactsAction action = src.getAction(S3ArtifactsAction.class);
@@ -271,7 +271,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
 
         final Map<String, String> fingerprints = Maps.newHashMap();
         for(FingerprintRecord record : records) {
-            final FingerprintMap map = Jenkins.getInstance().getFingerprintMap();
+            final FingerprintMap map = Jenkins.get().getFingerprintMap();
 
             final Fingerprint f = map.getOrCreate(src, record.getName(), record.getFingerprint());
             f.addFor(src);
@@ -279,7 +279,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
             fingerprints.put(record.getName(), record.getFingerprint());
         }
 
-        for (Run r : new Run[]{src, dst}) {
+        for (Run<?,?> r : new Run<?,?>[]{src, dst}) {
             if (r == null) {
                 continue;
             }
@@ -288,7 +288,7 @@ public class S3CopyArtifact extends Builder implements SimpleBuildStep {
             if (fa != null) {
                 fa.add(fingerprints);
             } else  {
-                r.getActions().add(new FingerprintAction(r, fingerprints));
+                r.addAction(new FingerprintAction(r, fingerprints));
             }
         }
 
