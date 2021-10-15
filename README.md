@@ -68,6 +68,12 @@ Notes
 an option to include the path name relative to the workspace
 should probably be added.
 
+Changelog
+=========
+
+* New change logs are in [GitHub Releases](https://github.com/jenkinsci/s3-plugin/releases)
+* Old change logs are stored in [old-changelog.md](old-changelog.md).
+
 Acknowledgements
 ================
 
