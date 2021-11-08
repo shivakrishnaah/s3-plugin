@@ -7,6 +7,7 @@ import hudson.FilePath.FileCallable;
 import hudson.ProxyConfiguration;
 import hudson.plugins.s3.ClientHelper;
 import hudson.util.Secret;
+import jenkins.security.Roles;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.remoting.RoleChecker;
 
@@ -46,7 +47,7 @@ abstract class S3Callable<T> implements FileCallable<T> {
 
     @Override
     public void checkRoles(RoleChecker roleChecker) throws SecurityException {
-
+        roleChecker.check(this, Roles.SLAVE);
     }
 
     private String getUniqueKey() {
