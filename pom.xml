@@ -13,7 +13,6 @@
     <url>https://github.com/jenkinsci/s3-plugin</url>
 
     <properties>
-        <java.level>8</java.level>
         <jenkins.version>2.289.3</jenkins.version>
     </properties>
 
