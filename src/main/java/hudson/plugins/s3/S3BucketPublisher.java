@@ -66,7 +66,20 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
     private boolean dontWaitForConcurrentBuildCompletion;
     private boolean dontSetBuildResultOnFailure;
 
-    private Level consoleLogLevel;
+    /**
+     * In-memory representation of console log level.
+     *
+     * @see #consoleLogLevelString
+     */
+    private transient Level consoleLogLevel;
+
+    /**
+     * Serial form of console log level.
+     *
+     * @see #consoleLogLevel
+     */
+    private String consoleLogLevelString;
+
     private Result pluginFailureResultConstraint;
     /**
      * User metadata key/value pairs to tag the upload with.
@@ -95,6 +108,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         this.dontWaitForConcurrentBuildCompletion = dontWaitForConcurrentBuildCompletion;
         this.dontSetBuildResultOnFailure = dontSetBuildResultOnFailure;
         this.consoleLogLevel = parseLevel(consoleLogLevel);
+        this.consoleLogLevelString = this.consoleLogLevel.getName();
         if (pluginFailureResultConstraint == null) {
             this.pluginFailureResultConstraint = Result.FAILURE;
         } else {
@@ -119,8 +133,16 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
         if (pluginFailureResultConstraint == null)
             pluginFailureResultConstraint = Result.FAILURE;
 
+        if (consoleLogLevel != null && consoleLogLevelString == null) {
+            consoleLogLevelString = consoleLogLevel.getName();
+        }
+
         if(consoleLogLevel==null)
             consoleLogLevel = Level.INFO;
+
+        if (consoleLogLevelString == null) {
+            consoleLogLevelString = consoleLogLevel.getName();
+        }
 
         return this;
     }
@@ -182,7 +204,7 @@ public final class S3BucketPublisher extends Recorder implements SimpleBuildStep
      */
     @SuppressWarnings("unused")
     public String getConsoleLogLevel() {
-        return consoleLogLevel.toString();
+        return consoleLogLevelString;
     }
 
     public S3Profile getProfile() {
