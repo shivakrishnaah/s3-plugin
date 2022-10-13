@@ -8,11 +8,14 @@
 
     <artifactId>s3</artifactId>
     <packaging>hpi</packaging>
-    <version>0.12.3-SNAPSHOT</version>
+    <version>${revision}${changelist}</version>
     <name>Jenkins S3 publisher plugin</name>
     <url>https://github.com/jenkinsci/s3-plugin</url>
 
     <properties>
+        <revision>0.12.3</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <gitHubRepo>jenkinsci/s3-plugin</gitHubRepo>
         <jenkins.version>2.289.3</jenkins.version>
     </properties>
 
@@ -48,10 +51,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/jenkinsci/s3-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/s3-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/s3-plugin</url>
-        <tag>HEAD</tag>
+        <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+        <url>https://github.com/${gitHubRepo}</url>
+        <tag>${scmTag}</tag>
     </scm>
 
     <dependencies>
