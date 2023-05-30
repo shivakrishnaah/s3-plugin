@@ -8,13 +8,12 @@
 
     <artifactId>s3</artifactId>
     <packaging>hpi</packaging>
-    <version>${revision}${changelist}</version>
+    <version>${changelist}</version>
     <name>Jenkins S3 publisher plugin</name>
     <url>https://github.com/jenkinsci/s3-plugin</url>
 
     <properties>
-        <revision>0.12.3</revision>
-        <changelist>-SNAPSHOT</changelist>
+        <changelist>999999-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/s3-plugin</gitHubRepo>
         <jenkins.version>2.361.4</jenkins.version>
     </properties>
