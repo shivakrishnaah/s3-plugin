@@ -1,8 +1,8 @@
 package hudson.plugins.s3;
 
-import com.gargoylesoftware.htmlunit.HttpMethod;
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.util.UrlUtils;
+import org.htmlunit.HttpMethod;
+import org.htmlunit.WebRequest;
+import org.htmlunit.util.UrlUtils;
 import hudson.model.Item;
 import hudson.security.SecurityRealm;
 import jenkins.model.Jenkins;
