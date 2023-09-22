@@ -15,7 +15,7 @@
     <properties>
         <changelist>999999-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/s3-plugin</gitHubRepo>
-        <jenkins.version>2.361.4</jenkins.version>
+        <jenkins.version>2.387.3</jenkins.version>
     </properties>
 
     <developers>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>maven-plugin</artifactId>
-            <version>3.22</version>
+            <version>3.23</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -124,8 +124,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.361.x</artifactId>
-                <version>2102.v854b_fec19c92</version>
+                <artifactId>bom-2.387.x</artifactId>
+                <version>2446.v2e9fd3b_d8c81</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
